@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Playlist Organizer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Workspace</p>
+      <h1>Spotify Playlist Organizer</h1>
+      <p class="subtitle">Quickly audit, dedupe, and plan your playlist clean-up without touching the Spotify UI.</p>
+    </div>
+    <div class="pill">local-only demo</div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Your playlists</h2>
+        <div class="badge" id="playlist-count">0</div>
+      </div>
+
+      <div class="control-stack">
+        <label class="field">
+          <span>Search</span>
+          <input id="playlist-search" type="search" placeholder="Find a playlist or tag (e.g. ""running"" or ""2024"" )" />
+        </label>
+
+        <label class="field">
+          <span>Sort by</span>
+          <select id="playlist-sort">
+            <option value="recent">Recently updated</option>
+            <option value="name-asc">Name (A → Z)</option>
+            <option value="name-desc">Name (Z → A)</option>
+            <option value="tracks-desc">Track count (high → low)</option>
+            <option value="tracks-asc">Track count (low → high)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="chips" id="tag-filters"></div>
+
+      <ul class="playlist-list" id="playlist-list"></ul>
+
+      <div class="panel-divider"></div>
+
+      <form id="import-form" class="import-form">
+        <div class="field">
+          <div class="label-row">
+            <span>Import playlists (JSON)</span>
+            <a class="hint" href="#" id="use-sample">Use sample template</a>
+          </div>
+          <textarea id="import-text" rows="6" placeholder='[{"name":"My Playlist","description":"From Spotify export","tracks":[{"name":"Song","artist":"Artist","album":"Album","duration":210}]}]'></textarea>
+        </div>
+        <button type="submit" class="primary">Add to workspace</button>
+        <p class="helper">Paste JSON from Spotify API responses (playlists with tracks) and the workspace will stage them locally.</p>
+      </form>
+      <div class="status" id="import-status" role="status"></div>
+    </section>
+
+    <section class="panel" id="detail-panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">Playlist</p>
+          <h2 id="detail-title">Select a playlist</h2>
+          <p class="subtitle" id="detail-subtitle"></p>
+        </div>
+        <div class="tags" id="detail-tags"></div>
+      </div>
+
+      <div class="stats" id="detail-stats"></div>
+
+      <div class="actions">
+        <button class="secondary" id="action-dedupe">Surface duplicates</button>
+        <button class="secondary" id="action-sort">Sort tracks A → Z</button>
+        <button class="secondary" id="action-merge">Merge selection</button>
+        <button class="secondary" id="action-export">Export plan</button>
+      </div>
+
+      <div class="grid">
+        <div>
+          <div class="panel-subheader">
+            <h3>Tracks</h3>
+            <div class="badge" id="track-count">0</div>
+          </div>
+          <div class="table-wrapper">
+            <table id="track-table">
+              <thead>
+                <tr>
+                  <th>Track</th>
+                  <th>Artist</th>
+                  <th>Album</th>
+                  <th class="numeric">Duration</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel-subheader">
+            <h3>Insights</h3>
+          </div>
+          <ul class="insights" id="insights"></ul>
+
+          <div class="panel-subheader">
+            <h3>Actions in queue</h3>
+          </div>
+          <ul class="insights" id="action-queue"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Paste Spotify playlist data or work with the starter set. Nothing leaves your browser.</p>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
